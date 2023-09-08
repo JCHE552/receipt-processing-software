@@ -171,7 +171,7 @@ function App() {
             <br></br>
             <br></br>
             <br></br>
-            3. You can search for your cahs points rewards with that ID!
+            3. You can search for your cash points rewards with that ID!
             <br></br>
             <br></br>
             <br></br>
