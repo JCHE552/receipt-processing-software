@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.whole{
+  background-color: #ECEEED;
+  background-size: cover;
+  background-position: bottom;
+  transition: 0.4s ease-out;
+  width: 100vw;
+  height:100vh;
+}
+
+/* this styles the header*/
+header{
+  background-color: white;
+  height: 10vh;
+  text-align: center;
+  font-weight: bold;
+  font-size: xx-large
+}
+
+/* this ia div that encompasses the intro section and the upload section*/
+header .head{
+  border-radius: 20px;
+  max-width: 80vw;
+  margin:0 auto;
+  padding: 10 px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.row1{
+  border: 3px solid #ECEEED;
+  padding: 20px;
+}
+
+/* styles the left half*/
+.intro{
+  width: 45vw;
+  height: 80vh;
+  
+  background-color: white;
+  font-weight:bold;
+  font-size:17px;
+  border-radius: 20px;
+  box-shadow: 10px 10px 5px lightblue;
+  text-align: left;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  float:left;
+
+}
+
+/* styles the right half */
+.Upload{
+  width: 45vw;
+  height: 80vh;
+  
+  
+  background-color: white;
+  font-weight:bold;
+  font-size:20px;
+  border-radius: 20px;
+  box-shadow: 10px 10px 5px lightblue;
+  text-align: left;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  float:right;
+
+}
