@@ -1,0 +1,69 @@
+version: '3.8'
+services:
+  mongo: 
+    image: "mongo"
+    container_name: mongodatabase1
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/data/db
+
+    networks:
+      - mern-network
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports: 
+      - "4000:4000"
+
+    env_file:
+      - ./backend/.env
+    
+    command: bash -c "node server.js && npm start --legacy-peer-deps"
+
+
+    image: myapp-backend
+    container_name: backend-test
+
+    networks:
+      - mern-network
+
+    depends_on:
+      - mongo
+    
+
+    
+  
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    
+    image: myapp-frontend
+
+    container_name: frontend-test
+
+    stdin_open: true
+
+    command: bash -c "npm install --legacy-peer-deps && npm start --legacy-peer-deps"
+
+    networks:
+      - mern-network
+
+    depends_on:
+      - backend
+
+    ports:
+      - "3000:3000"
+    
+
+
+volumes:
+  data:
+    driver: local
+
+networks:
+  mern-network:
+    driver: bridge

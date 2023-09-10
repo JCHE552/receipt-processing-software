@@ -147,7 +147,7 @@ function App() {
        
         <header className = 'head'>
           <div>
-            Receipt Processor
+            Receipt Processor 2
           </div>
               
         </header>
@@ -156,7 +156,7 @@ function App() {
 
         <div className = 'row1'>
          <div className='intro'>
-            INTRO
+            INTRO1
             <br></br>
             <br></br>
             Hello! You've come to generic receipt processor! This website does the following:
