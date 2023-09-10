@@ -75,7 +75,7 @@ function calcpoints(receipt3){
     }
     console.log(pointtally)
 
-    //we check if total is a multiple of a quarter or dollar exclusively and award 25 and 50 points respectively
+    //we check if total is a multiple of a quarter or dollar and award 25 and 50 points respectively
     if(parseFloat(receipt3.total)%(1.00)===0){
         pointtally+=50
         console.log(pointtally)
@@ -131,7 +131,7 @@ function calcpoints(receipt3){
     //check each item to see if its description is a multiple of 3, if so we add 0.2*item price
     for (var i = 0; i < receipt3.items.length; i++){
         if (receipt3.items[i].shortDescription.length%3===0){
-            pointtally += parseFloat(receipt3.items[i].price)*0.2
+            pointtally += Math.ceil(parseFloat(receipt3.items[i].price)*0.2)
         }
     }
     console.log(pointtally)

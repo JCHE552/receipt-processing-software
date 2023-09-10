@@ -18,10 +18,10 @@ app.use((req, res, next)=>{
 app.use('/api/receipts',receiptRoutes)
 
 //connect to db
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect("mongodb://mongo:27017/receiptdb")
     .then(()=>{
         //listen for requests
-app.listen(process.env.PORT, () =>{
+app.listen(4000, () =>{
     console.log('connected to db listening to port 4000', process.env.PORT)
 })
     })

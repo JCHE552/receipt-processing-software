@@ -18,12 +18,6 @@ function App() {
 
   function handleFile(e) {//upon uploading a json file, it updates file in usestate to be the json file
 
-    
-      //const errtest = JSON.parse(e)
-      //const allowed = ['file/json']
-      //if(!allowed.includes(e.target.files[0]?.type)){
-      //  console.log('error')
-      //}else{
       const fileReader = new FileReader();
       fileReader.readAsText(e.target.files[0], "UTF-8");
       fileReader.onload = (e) => {
@@ -147,7 +141,7 @@ function App() {
        
         <header className = 'head'>
           <div>
-            Receipt Processor 2
+            Receipt Processor
           </div>
               
         </header>
