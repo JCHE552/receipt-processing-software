@@ -1,4 +1,4 @@
-Reciept Porcessor!
+Reciept Processor!
 
 This was made with MERN stack.
 
