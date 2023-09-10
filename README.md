@@ -4,6 +4,8 @@ This was made with MERN stack.
 
 You cna run this with or without docker.
 
+If using docker make sure you have docker desktop!
+
 With Docker:
 1. Go to the directory of docker-compose.yaml in terminal
 2. This should be in folder receipt-processing-software
