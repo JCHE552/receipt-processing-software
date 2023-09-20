@@ -1,15 +1,15 @@
-Reciept Processor!
+Receipt Processor!
 
 This was made with MERN stack.
 
-You cna run this with or without docker.
+You can run this with or without docker.
 
 If using docker:
 1. Make sure you have docker desktop
 2. You may need to use linux containers
 3. Some extensions you might need: dev containers, docker compose, docker, WSL, docker extension pack, docker explorer
 4. Make sure WSL is updated and enabled
-5. Can install and update WSL with powershell running on admin
+5. Can install and update WSL with powershell running on administrator
 
 With Docker:
 1. Go to the directory of docker-compose.yaml in terminal
