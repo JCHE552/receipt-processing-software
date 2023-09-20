@@ -76,13 +76,7 @@ function App() {
       method: "get", 
     })
 
-    
-    console.log('logging response')
-    console.log(response)
-
     const json1 = await response.json()
-    console.log('logging response object')
-    console.log(json1)
 
     if (!response.ok){//this checks if response is good
       setError(json1.error)

@@ -6,14 +6,13 @@ const createNewReceipt = async (req, res) => {
     const {retailer, purchaseDate, purchaseTime, total, items } = req.body
 
 try {//try catch block used here because many things wrong can happen when posting than compared to other methods like calc cash rewards or deleting
-    console.log('receipt being made')
-    console.log(req.body)
     
     const receipt1 = await receipts.create({retailer, purchaseDate, purchaseTime, total, items })
-    console.log(receipt1._id)
+
     return res.status(200).json(receipt1._id)
+
 } catch (error) {
-    console.log('error in creating receipt')
+
     return res.status(400).json('invalid file')
 }
 
@@ -40,8 +39,9 @@ const deleteReceipt = async (req, res) => {
 
 //get receipt points by id
 const getReceiptPoints =  async (req, res) => {
-    console.log('inside method for calc points')
+
     const {id} = req.params
+
     if(!mongoose.Types.ObjectId.isValid(id)){//check for vaid id
         return res.status(400).json('invlaid id')
     }
@@ -53,7 +53,7 @@ const getReceiptPoints =  async (req, res) => {
     }
     else{//returns points as a json
         const receipt2 = calcpoints(receipt1)//calculates the points
-        console.log(receipt2)
+        
         const receipt3 = {Points: receipt2}
         
         
@@ -66,34 +66,81 @@ const getReceiptPoints =  async (req, res) => {
 function calcpoints(receipt3){
     pointtally = 0//initialize points awarded
 
+    pointtally2 = 0
+    pointtally3 = 0
+    pointtally4 = 0
+    pointtally5 = 0
+    pointtally6 = 0
+    pointtally7 = 0
+
+    pointtally2 = namepoints(receipt3, pointtally2) //adding points for each alphanumeric char in retailer name
+
+    pointtally3 = multpoints(receipt3, pointtally3) //adding points if total is multiple of 25 cents or dollar
+
+    pointtally4 = itempoints(receipt3, pointtally4) //adding points for very 2 items
+
+    pointtally5 = oddpoints(receipt3, pointtally5) //adding points if purchase date is odd
+
+    pointtally6 = timepoints(receipt3, pointtally6) //adding points if time is between 2 and 4 pm
+
+    pointtally7 = descpoints(receipt3, pointtally7) //adding points if decription lenght is mult of 3
+
+    pointtally = pointtally2 + pointtally3 + pointtally4 + pointtally5 + pointtally6 + pointtally7
+
+
+    return pointtally
+}
+
+
+function namepoints(receipt4, pointtally1){
+
     //we award a point for each alphanumeric character in retailer name usiing this for loop
-    for (var i = 0; i < receipt3.retailer.length; i++){
+    for (var i = 0; i < receipt4.retailer.length; i++){
         var regEx = /^[0-9a-zA-Z]+$/
-        if (receipt3.retailer.charAt(i).match(regEx)){
-            pointtally++
+        if (receipt4.retailer.charAt(i).match(regEx)){
+            pointtally1++
         }
     }
-    console.log(pointtally)
+
+    return pointtally1
+}
+
+
+function multpoints(receipt4, pointtally1){
 
     //we check if total is a multiple of a quarter or dollar and award 25 and 50 points respectively
-    if(parseFloat(receipt3.total)%(1.00)===0){
-        pointtally+=50
-        console.log(pointtally)
+    if(parseFloat(receipt4.total)%(1.00)===0){
+        pointtally1+=50
+        
     }
-    if (parseFloat(receipt3.total)%(0.25)===0){
-        pointtally+=25
-        console.log(pointtally)
+    if (parseFloat(receipt4.total)%(0.25)===0){
+        pointtally1+=25
+        
     }
+    
+    return pointtally1
+}
+
+function itempoints(receipt4, pointtally1){
 
     //add 5 points for every 2 items
-    pointtally += Math.floor(receipt3.items.length/2)*5
-    console.log(pointtally)
+    pointtally1 += Math.floor(receipt4.items.length/2)*5
+    
+    return pointtally1
+}
+
+function oddpoints(receipt4, pointtally1){
 
     //check if purchase date is odd
-    if (!(receipt3.purchaseDate.charAt(receipt3.purchaseDate.length-1)%2===0)){
-        pointtally+=6
-        console.log(pointtally)
+    if (!(receipt4.purchaseDate.charAt(receipt4.purchaseDate.length-1)%2===0)){
+        pointtally1+=6
+        
     }
+    
+    return pointtally1
+}
+
+function timepoints(receipt4, pointtally1){
 
     //check if purchasetime is between 2 and 4 pm
     //the code below calc hours in military time
@@ -101,10 +148,10 @@ function calcpoints(receipt3){
     stop = true
     hours = ""
     while (stop){
-        if (receipt3.purchaseTime.charAt(pointer)===':'){
+        if (receipt4.purchaseTime.charAt(pointer)===':'){
             stop = false
         }else{
-            hours = hours.concat(receipt3.purchaseTime.charAt(pointer))
+            hours = hours.concat(receipt4.purchaseTime.charAt(pointer))
         }
         
         pointer++
@@ -114,31 +161,35 @@ function calcpoints(receipt3){
     //this returns the minutes in military time
     mins = ''
     for (i = pointer; i<pointer+2; i++){
-        mins = mins.concat(receipt3.purchaseTime.charAt(i))
+        mins = mins.concat(receipt4.purchaseTime.charAt(i))
     }
 
     //here we need to check if hour is past 2 pm and at least 1 minute has lapsed, also want to check if hour is less than 4 pm
     if (parseFloat(hours)>=14 && parseFloat(hours)<16){
         if (parseFloat(hours)===14 && parseFloat(mins)==='00'){
-            pointtally=pointtally
+            pointtally1=pointtally1
         }else{
-            pointtally+=10
-            console.log(pointtally)
+            pointtally1+=10
+            
         }
     }
+    
+    return pointtally1
+}
 
+function descpoints(receipt4, pointtally1){
 
     //check each item to see if its description is a multiple of 3, if so we add 0.2*item price
-    for (var i = 0; i < receipt3.items.length; i++){
-        if (receipt3.items[i].shortDescription.length%3===0){
-            pointtally += Math.ceil(parseFloat(receipt3.items[i].price)*0.2)
+    for (var i = 0; i < receipt4.items.length; i++){
+        if (receipt4.items[i].shortDescription.length%3===0){
+            pointtally1 += Math.ceil(parseFloat(receipt4.items[i].price)*0.2)
         }
     }
-    console.log(pointtally)
-
-
-    return pointtally
+    
+    return pointtally1
 }
+
+
 
 
 module.exports = {//exports all 3 methods
